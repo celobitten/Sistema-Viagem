@@ -11,7 +11,6 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
 body { font-family: 'Roboto', sans-serif; margin:0; padding:0; background:linear-gradient(to bottom, #87CEFA, #fff); color:#333; }
 header { text-align:center; background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1350&q=80') no-repeat center; background-size:cover; padding:40px 0; color:#fff; text-shadow:2px 2px 4px rgba(0,0,0,0.6);}
 header h1{font-size:2.5em;margin:0;}
@@ -118,14 +117,12 @@ a{text-decoration:none;color:#fff;}
     apiKey: "AIzaSyB_3dSgf5Zs6HDGLR-1TmNXNcOlCjkg-zM",
     authDomain: "viagem-61b84.firebaseapp.com",
     projectId: "viagem-61b84",
-    storageBucket: "viagem-61b84.firebasestorage.app",
+    storageBucket: "viagem-61b84.appspot.com",
     messagingSenderId: "206479810038",
     appId: "1:206479810038:web:000cd36b8610a4590b3bd7"
   };
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
-
-  const SECRET_KEY = "MEU_TOKEN_TESTE"; // 🔹 chave secreta para escrita
 
   const form = document.getElementById('viagemForm');
   const tableBody = document.querySelector('#viagensTable tbody');
@@ -139,6 +136,7 @@ a{text-decoration:none;color:#fff;}
       resumo.textContent="Nenhuma viagem cadastrada.";
       return;
     }
+
     viagens.forEach(v=>v.totalBase=parseFloat(v.valorHotel)+parseFloat(v.valorPassagem));
     const menorTotal = Math.min(...viagens.map(v=>v.totalBase));
 
@@ -150,7 +148,7 @@ a{text-decoration:none;color:#fff;}
       const iconAllInclusive = v.allInclusive==="Sim"?"🍹":"❌";
       row.innerHTML=`
         <td>🌴 ${v.destino}</td>
-        <td class="hospedagem">${iconHospedagem} <button title="Abrir link do hotel" onclick="window.open('${v.linkHotel}', '_blank')">${v.hotel}</button></td>
+        <td class="hospedagem">${iconHospedagem} <button title="Abrir link do hotel" onclick="window.open('${v.linkHotel}','_blank')">${v.hotel}</button></td>
         <td>${v.tipoHospedagem}</td>
         <td class="allInclusive">${iconAllInclusive}</td>
         <td>✈️ R$ ${parseFloat(v.valorHotel).toFixed(2)}</td>
@@ -184,20 +182,15 @@ a{text-decoration:none;color:#fff;}
   }
 
   function salvarViagemFirebase(viagem){
-    // Adiciona a chave secreta
-    viagem.secretKey = SECRET_KEY;
     db.collection("viagens").add(viagem).then(()=>carregarViagensFirebase());
   }
 
   function atualizarViagemFirebase(id, dados){
-    // Adiciona a chave secreta
-    dados.secretKey = SECRET_KEY;
     db.collection("viagens").doc(id).update(dados).then(()=>carregarViagensFirebase());
   }
 
   function removerViagemFirebase(id){
-    // Para remover, precisamos enviar a chave secreta
-    db.collection("viagens").doc(id).update({secretKey: SECRET_KEY}).then(()=>db.collection("viagens").doc(id).delete().then(()=>carregarViagensFirebase()));
+    db.collection("viagens").doc(id).delete().then(()=>carregarViagensFirebase());
   }
 
   function editarViagem(id){
@@ -229,8 +222,7 @@ a{text-decoration:none;color:#fff;}
       valorPassagem: document.getElementById('valorPassagem').value,
       pessoas: document.getElementById('pessoas').value,
       mes: document.getElementById('mes').value,
-      ano: document.getElementById('ano').value,
-      secretKey: SECRET_KEY
+      ano: document.getElementById('ano').value
     };
 
     const editId = document.getElementById('editId').value;
