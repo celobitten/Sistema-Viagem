@@ -12,72 +12,22 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-body {
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(to bottom, #87CEFA, #ffffff);
-  color: #333;
-}
-
-header {
-  text-align: center;
-  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1350&q=80') no-repeat center;
-  background-size: cover;
-  padding: 40px 0;
-  color: #fff;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-}
-
-header h1 { font-size: 2.5em; margin: 0; }
-
-table {
-  width: 95%;
-  border-collapse: collapse;
-  margin: 20px auto;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-  background-color: rgba(255,255,255,0.95);
-}
-
-th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ccc; }
-th.hospedagem, td.hospedagem { width: 180px; }
-th.allInclusive, td.allInclusive { width: 80px; text-align: center; }
-
-tr:hover { background-color: rgba(0, 128, 128, 0.1); }
-.mais-barato { background-color: #d4edda !important; }
-
-input, select {
-  padding: 8px;
-  width: 90%;
-  margin: 5px 0;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
-}
-
-button {
-  padding: 6px 12px;
-  margin-top: 5px;
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
-  background-color: #ff7f50;
-  color: #fff;
-  font-weight: bold;
-  transition: transform 0.2s, background-color 0.3s;
-}
-
-button:hover {
-  background-color: #ff6347;
-  transform: scale(1.05);
-}
-
-#resumo { margin-top: 15px; text-align: center; font-weight: bold; font-size: 1.2em; color: #2E8B57; }
-#ordenarBtn { display: block; margin: 10px auto; }
-h2 { text-align: center; color: #2E8B57; }
-a { text-decoration: none; color: #fff; }
+body { font-family: 'Roboto', sans-serif; margin:0; padding:0; background:linear-gradient(to bottom, #87CEFA, #fff); color:#333; }
+header { text-align:center; background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1350&q=80') no-repeat center; background-size:cover; padding:40px 0; color:#fff; text-shadow:2px 2px 4px rgba(0,0,0,0.6);}
+header h1{font-size:2.5em;margin:0;}
+table{width:95%;border-collapse:collapse;margin:20px auto;border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.15);background-color:rgba(255,255,255,0.95);}
+th,td{padding:10px;text-align:left;border-bottom:1px solid #ccc;}
+th.hospedagem,td.hospedagem{width:180px;}
+th.allInclusive,td.allInclusive{width:80px;text-align:center;}
+tr:hover{background-color:rgba(0,128,128,0.1);}
+.mais-barato{background-color:#d4edda !important;}
+input,select{padding:8px;width:90%;margin:5px 0;border-radius:6px;border:1px solid #ccc;box-shadow:1px 1px 4px rgba(0,0,0,0.1);}
+button{padding:6px 12px;margin-top:5px;cursor:pointer;border:none;border-radius:8px;background-color:#ff7f50;color:#fff;font-weight:bold;transition:transform 0.2s, background-color 0.3s;}
+button:hover{background-color:#ff6347;transform:scale(1.05);}
+#resumo{margin-top:15px;text-align:center;font-weight:bold;font-size:1.2em;color:#2E8B57;}
+#ordenarBtn{display:block;margin:10px auto;}
+h2{text-align:center;color:#2E8B57;}
+a{text-decoration:none;color:#fff;}
 </style>
 </head>
 <body>
@@ -87,7 +37,7 @@ a { text-decoration: none; color: #fff; }
 </header>
 
 <label style="text-align:center; display:block;">Filtrar por mês:</label>
-<select id="filtroMes" style="width: 200px; margin: 0 auto; display: block;">
+<select id="filtroMes" style="width:200px;margin:0 auto;display:block;">
   <option value="">Todos</option>
   <option value="Janeiro">Janeiro</option>
   <option value="Fevereiro">Fevereiro</option>
@@ -132,21 +82,17 @@ a { text-decoration: none; color: #fff; }
   <input type="text" id="destino" placeholder="Destino" required><br>
   <input type="text" id="hotel" placeholder="Nome da Hospedagem" required><br>
   <input type="url" id="linkHotel" placeholder="Link do Hotel (URL)" required><br>
-
   <select id="tipoHospedagem" required>
     <option value="Hotel">Hotel</option>
     <option value="Airbnb">Airbnb</option>
   </select><br>
-
   <select id="allInclusive" required>
     <option value="Sim">All Inclusive</option>
     <option value="Não">Não</option>
   </select><br>
-
   <input type="number" id="valorHotel" placeholder="Valor do Hotel" required><br>
   <input type="number" id="valorPassagem" placeholder="Valor da Passagem" required><br>
   <input type="number" id="pessoas" placeholder="Quantidade de Pessoas" min="1" required><br>
-
   <select id="mes" required>
     <option value="">Selecione o mês</option>
     <option value="Janeiro">Janeiro</option>
@@ -162,23 +108,24 @@ a { text-decoration: none; color: #fff; }
     <option value="Novembro">Novembro</option>
     <option value="Dezembro">Dezembro</option>
   </select><br>
-
   <input type="number" id="ano" placeholder="Ano da Viagem" required><br>
   <button type="submit">Salvar Viagem</button>
 </form>
 
 <script>
-  // Configuração do Firebase
+  // 🔹 Configuração do Firebase
   const firebaseConfig = {
-    apiKey: "SUA_API_KEY",
-    authDomain: "SEU_DOMINIO.firebaseapp.com",
-    projectId: "SEU_PROJECT_ID",
-    storageBucket: "SEU_PROJECT_ID.appspot.com",
-    messagingSenderId: "SEU_SENDER_ID",
-    appId: "SEU_APP_ID"
+    apiKey: "AIzaSyB_3dSgf5Zs6HDGLR-1TmNXNcOlCjkg-zM",
+    authDomain: "viagem-61b84.firebaseapp.com",
+    projectId: "viagem-61b84",
+    storageBucket: "viagem-61b84.firebasestorage.app",
+    messagingSenderId: "206479810038",
+    appId: "1:206479810038:web:000cd36b8610a4590b3bd7"
   };
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
+
+  const SECRET_KEY = "MEU_TOKEN_TESTE"; // 🔹 chave secreta para escrita
 
   const form = document.getElementById('viagemForm');
   const tableBody = document.querySelector('#viagensTable tbody');
@@ -192,7 +139,6 @@ a { text-decoration: none; color: #fff; }
       resumo.textContent="Nenhuma viagem cadastrada.";
       return;
     }
-
     viagens.forEach(v=>v.totalBase=parseFloat(v.valorHotel)+parseFloat(v.valorPassagem));
     const menorTotal = Math.min(...viagens.map(v=>v.totalBase));
 
@@ -200,10 +146,8 @@ a { text-decoration: none; color: #fff; }
     viagens.forEach(v=>{
       const row = document.createElement('tr');
       if(v.totalBase===menorTotal) row.classList.add('mais-barato');
-
       const iconHospedagem = v.tipoHospedagem==="Hotel"?"🏨":"🏠";
       const iconAllInclusive = v.allInclusive==="Sim"?"🍹":"❌";
-
       row.innerHTML=`
         <td>🌴 ${v.destino}</td>
         <td class="hospedagem">${iconHospedagem} <button title="Abrir link do hotel" onclick="window.open('${v.linkHotel}', '_blank')">${v.hotel}</button></td>
@@ -234,22 +178,26 @@ a { text-decoration: none; color: #fff; }
       snapshot.forEach(doc=>{
         viagens.push({id: doc.id, ...doc.data()});
       });
-      // Aplicar filtro por mês
       if(filtroMes.value) viagens = viagens.filter(v=>v.mes===filtroMes.value);
       mostrarViagensNaTabela(viagens);
     });
   }
 
   function salvarViagemFirebase(viagem){
+    // Adiciona a chave secreta
+    viagem.secretKey = SECRET_KEY;
     db.collection("viagens").add(viagem).then(()=>carregarViagensFirebase());
   }
 
   function atualizarViagemFirebase(id, dados){
+    // Adiciona a chave secreta
+    dados.secretKey = SECRET_KEY;
     db.collection("viagens").doc(id).update(dados).then(()=>carregarViagensFirebase());
   }
 
   function removerViagemFirebase(id){
-    db.collection("viagens").doc(id).delete().then(()=>carregarViagensFirebase());
+    // Para remover, precisamos enviar a chave secreta
+    db.collection("viagens").doc(id).update({secretKey: SECRET_KEY}).then(()=>db.collection("viagens").doc(id).delete().then(()=>carregarViagensFirebase()));
   }
 
   function editarViagem(id){
@@ -281,7 +229,8 @@ a { text-decoration: none; color: #fff; }
       valorPassagem: document.getElementById('valorPassagem').value,
       pessoas: document.getElementById('pessoas').value,
       mes: document.getElementById('mes').value,
-      ano: document.getElementById('ano').value
+      ano: document.getElementById('ano').value,
+      secretKey: SECRET_KEY
     };
 
     const editId = document.getElementById('editId').value;
