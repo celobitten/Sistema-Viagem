@@ -4,30 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sistema de Viagens - Férias</title>
-
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-body { font-family: 'Roboto', sans-serif; margin:0; padding:0; background:linear-gradient(to bottom, #87CEFA, #fff); color:#333; }
-header { text-align:center; background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1350&q=80') no-repeat center; background-size:cover; padding:40px 0; color:#fff; text-shadow:2px 2px 4px rgba(0,0,0,0.6);}
-header h1{font-size:2.5em;margin:0;}
-table{width:95%;border-collapse:collapse;margin:20px auto;border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.15);background-color:rgba(255,255,255,0.95);}
-th,td{padding:10px;text-align:left;border-bottom:1px solid #ccc;}
-th.hospedagem,td.hospedagem{width:180px;}
-th.allInclusive,td.allInclusive{width:80px;text-align:center;}
-tr:hover{background-color:rgba(0,128,128,0.1);}
-.mais-barato{background-color:#d4edda !important;}
-input,select{padding:8px;width:90%;margin:5px 0;border-radius:6px;border:1px solid #ccc;box-shadow:1px 1px 4px rgba(0,0,0,0.1);}
-button{padding:6px 12px;margin-top:5px;cursor:pointer;border:none;border-radius:8px;background-color:#ff7f50;color:#fff;font-weight:bold;transition:transform 0.2s, background-color 0.3s;}
-button:hover{background-color:#ff6347;transform:scale(1.05);}
-#resumo{margin-top:15px;text-align:center;font-weight:bold;font-size:1.2em;color:#2E8B57;}
-#ordenarBtn{display:block;margin:10px auto;}
-h2{text-align:center;color:#2E8B57;}
-a{text-decoration:none;color:#fff;}
+  body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: linear-gradient(to bottom, #87CEFA, #ffffff); color: #333; }
+  header { text-align: center; padding: 40px 0; background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1350&q=80') no-repeat center; background-size: cover; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.6); }
+  header h1 { font-size: 2.5em; margin: 0; }
+  table { width: 95%; border-collapse: collapse; margin: 20px auto; border-radius: 12px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,0.15); background-color: rgba(255,255,255,0.95); }
+  th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ccc; }
+  th.hospedagem, td.hospedagem { width: 180px; }
+  th.allInclusive, td.allInclusive { width: 80px; text-align: center; }
+  tr:hover { background-color: rgba(0, 128, 128, 0.1); }
+  .mais-barato { background-color: #d4edda !important; }
+  #resumo { margin-top: 15px; text-align: center; font-weight: bold; font-size: 1.2em; color: #2E8B57; }
+  h2 { text-align: center; color: #2E8B57; }
+  a { text-decoration: none; color: #fff; }
+  input, select { padding: 8px; width: 90%; margin: 5px 0; border-radius: 6px; border: 1px solid #ccc; box-shadow: 1px 1px 4px rgba(0,0,0,0.1); }
+  button { padding: 5px 10px; border: none; border-radius: 6px; cursor: pointer; background-color: #ff7f50; color: #fff; font-weight: bold; }
+  button:hover { background-color: #ff6347; }
+  form { width: 300px; margin: 20px auto; text-align: center; }
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
 </head>
 <body>
 
@@ -35,25 +31,7 @@ a{text-decoration:none;color:#fff;}
   <h1>✈️🌴🏖️ Sistema de Viagens - Férias 🌴✈️🏖️</h1>
 </header>
 
-<label style="text-align:center; display:block;">Filtrar por mês:</label>
-<select id="filtroMes" style="width:200px;margin:0 auto;display:block;">
-  <option value="">Todos</option>
-  <option value="Janeiro">Janeiro</option>
-  <option value="Fevereiro">Fevereiro</option>
-  <option value="Março">Março</option>
-  <option value="Abril">Abril</option>
-  <option value="Maio">Maio</option>
-  <option value="Junho">Junho</option>
-  <option value="Julho">Julho</option>
-  <option value="Agosto">Agosto</option>
-  <option value="Setembro">Setembro</option>
-  <option value="Outubro">Outubro</option>
-  <option value="Novembro">Novembro</option>
-  <option value="Dezembro">Dezembro</option>
-</select>
-
-<button id="ordenarBtn">Ordenar do Mais Barato para o Mais Caro</button>
-
+<h2>Lista de Viagens</h2>
 <table id="viagensTable">
 <thead>
 <tr>
@@ -67,7 +45,6 @@ a{text-decoration:none;color:#fff;}
   <th>Total Base (R$)</th>
   <th>Mês</th>
   <th>Ano</th>
-  <th>Ações</th>
 </tr>
 </thead>
 <tbody></tbody>
@@ -75,9 +52,8 @@ a{text-decoration:none;color:#fff;}
 
 <div id="resumo"></div>
 
-<h2>Adicionar / Editar Viagem</h2>
+<h2>Adicionar Viagem</h2>
 <form id="viagemForm">
-  <input type="hidden" id="editId">
   <input type="text" id="destino" placeholder="Destino" required><br>
   <input type="text" id="hotel" placeholder="Nome da Hospedagem" required><br>
   <input type="url" id="linkHotel" placeholder="Link do Hotel (URL)" required><br>
@@ -112,136 +88,94 @@ a{text-decoration:none;color:#fff;}
 </form>
 
 <script>
-  // 🔹 Configuração do Firebase
-  const firebaseConfig = {
-    apiKey: "SUA_API_KEY_AQUI",
-    authDomain: "SEU_PROJECT_ID.firebaseapp.com",
-    projectId: "SEU_PROJECT_ID",
-    storageBucket: "SEU_PROJECT_ID.appspot.com",
-    messagingSenderId: "SEU_MESSAGING_SENDER_ID",
-    appId: "SEU_APP_ID"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+// Link público da planilha (publicada na web)
+const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS2HW4c2GZyc0l3g8j5Kx1Xj4fH3tM4O3NwUe1/pubhtml';
 
-  const form = document.getElementById('viagemForm');
+// Link do seu Apps Script
+const webAppUrl = 'https://script.google.com/macros/s/AKfycbzCplWdT_uX0UJ13Y4sqzJyMWGf--tFa0Hgp-ToHjw/dev';
+
+function init() {
+  Tabletop.init({
+    key: publicSpreadsheetUrl,
+    callback: showViagens,
+    simpleSheet: true
+  });
+}
+
+function showViagens(data, tabletop) {
   const tableBody = document.querySelector('#viagensTable tbody');
-  const resumo = document.getElementById('resumo');
-  const ordenarBtn = document.getElementById('ordenarBtn');
-  const filtroMes = document.getElementById('filtroMes');
+  tableBody.innerHTML = '';
 
-  function mostrarViagensNaTabela(viagens){
-    if(!viagens.length){
-      tableBody.innerHTML='';
-      resumo.textContent="Nenhuma viagem cadastrada.";
-      return;
-    }
-
-    viagens.forEach(v=>v.totalBase=parseFloat(v.valorHotel)+parseFloat(v.valorPassagem));
-    const menorTotal = Math.min(...viagens.map(v=>v.totalBase));
-
-    tableBody.innerHTML='';
-    viagens.forEach(v=>{
-      const row = document.createElement('tr');
-      if(v.totalBase===menorTotal) row.classList.add('mais-barato');
-      const iconHospedagem = v.tipoHospedagem==="Hotel"?"🏨":"🏠";
-      const iconAllInclusive = v.allInclusive==="Sim"?"🍹":"❌";
-      row.innerHTML=`
-        <td>🌴 ${v.destino}</td>
-        <td class="hospedagem">${iconHospedagem} <button title="Abrir link do hotel" onclick="window.open('${v.linkHotel}','_blank')">${v.hotel}</button></td>
-        <td>${v.tipoHospedagem}</td>
-        <td class="allInclusive">${iconAllInclusive}</td>
-        <td>✈️ R$ ${parseFloat(v.valorHotel).toFixed(2)}</td>
-        <td>✈️ R$ ${parseFloat(v.valorPassagem).toFixed(2)}</td>
-        <td>${v.pessoas}</td>
-        <td>R$ ${v.totalBase.toFixed(2)}</td>
-        <td>${v.mes}</td>
-        <td>${v.ano}</td>
-        <td>
-          <button onclick="editarViagem('${v.id}')">Editar</button>
-          <button onclick="removerViagemFirebase('${v.id}')">Remover</button>
-        </td>
-      `;
-      tableBody.appendChild(row);
-    });
-
-    const destinosBaratos = viagens.filter(v=>v.totalBase===menorTotal)
-                                   .map(v=>`${v.destino} (R$ ${v.totalBase.toFixed(2)})`).join(', ');
-    resumo.textContent=`Destino(s) mais barato(s): ${destinosBaratos}`;
+  if(!data || !data.length){
+    document.getElementById('resumo').textContent = 'Nenhuma viagem cadastrada.';
+    return;
   }
 
-  function carregarViagensFirebase(){
-    db.collection("viagens").get().then(snapshot=>{
-      let viagens = [];
-      snapshot.forEach(doc=>{
-        viagens.push({id: doc.id, ...doc.data()});
-      });
-      if(filtroMes.value) viagens = viagens.filter(v=>v.mes===filtroMes.value);
-      mostrarViagensNaTabela(viagens);
-    });
-  }
+  data.forEach(v => v.totalBase = parseFloat(v.valorHotel) + parseFloat(v.valorPassagem));
+  const menorTotal = Math.min(...data.map(v => v.totalBase));
 
-  function salvarViagemFirebase(viagem){
-    db.collection("viagens").add(viagem).then(()=>carregarViagensFirebase());
-  }
+  data.forEach(v => {
+    const row = document.createElement('tr');
+    if(v.totalBase === menorTotal) row.classList.add('mais-barato');
 
-  function atualizarViagemFirebase(id, dados){
-    db.collection("viagens").doc(id).update(dados).then(()=>carregarViagensFirebase());
-  }
+    const iconHospedagem = v.tipoHospedagem === "Hotel" ? "🏨" : "🏠";
+    const iconAllInclusive = v.allInclusive === "Sim" ? "🍹" : "❌";
 
-  function removerViagemFirebase(id){
-    db.collection("viagens").doc(id).delete().then(()=>carregarViagensFirebase());
-  }
-
-  function editarViagem(id){
-    db.collection("viagens").doc(id).get().then(doc=>{
-      const v = doc.data();
-      document.getElementById('editId').value = id;
-      document.getElementById('destino').value = v.destino;
-      document.getElementById('hotel').value = v.hotel;
-      document.getElementById('linkHotel').value = v.linkHotel;
-      document.getElementById('tipoHospedagem').value = v.tipoHospedagem;
-      document.getElementById('allInclusive').value = v.allInclusive;
-      document.getElementById('valorHotel').value = v.valorHotel;
-      document.getElementById('valorPassagem').value = v.valorPassagem;
-      document.getElementById('pessoas').value = v.pessoas;
-      document.getElementById('mes').value = v.mes;
-      document.getElementById('ano').value = v.ano;
-    });
-  }
-
-  form.addEventListener('submit',function(e){
-    e.preventDefault();
-    const viagem = {
-      destino: document.getElementById('destino').value,
-      hotel: document.getElementById('hotel').value,
-      linkHotel: document.getElementById('linkHotel').value,
-      tipoHospedagem: document.getElementById('tipoHospedagem').value,
-      allInclusive: document.getElementById('allInclusive').value,
-      valorHotel: document.getElementById('valorHotel').value,
-      valorPassagem: document.getElementById('valorPassagem').value,
-      pessoas: document.getElementById('pessoas').value,
-      mes: document.getElementById('mes').value,
-      ano: document.getElementById('ano').value
-    };
-
-    const editId = document.getElementById('editId').value;
-    if(editId){
-      atualizarViagemFirebase(editId, viagem);
-      document.getElementById('editId').value = '';
-    } else {
-      salvarViagemFirebase(viagem);
-    }
-
-    form.reset();
+    row.innerHTML = `
+      <td>🌴 ${v.destino}</td>
+      <td class="hospedagem"><button onclick="window.open('${v.linkHotel}','_blank')">${iconHospedagem} ${v.hotel}</button></td>
+      <td>${v.tipoHospedagem}</td>
+      <td class="allInclusive">${iconAllInclusive}</td>
+      <td>R$ ${parseFloat(v.valorHotel).toFixed(2)}</td>
+      <td>R$ ${parseFloat(v.valorPassagem).toFixed(2)}</td>
+      <td>${v.pessoas}</td>
+      <td>R$ ${v.totalBase.toFixed(2)}</td>
+      <td>${v.mes}</td>
+      <td>${v.ano}</td>
+    `;
+    tableBody.appendChild(row);
   });
 
-  ordenarBtn.addEventListener('click',()=>carregarViagensFirebase());
-  filtroMes.addEventListener('change',()=>carregarViagensFirebase());
+  const destinosBaratos = data.filter(v => v.totalBase === menorTotal)
+                              .map(v => `${v.destino} (R$ ${v.totalBase.toFixed(2)})`)
+                              .join(', ');
+  document.getElementById('resumo').textContent = `Destino(s) mais barato(s): ${destinosBaratos}`;
+}
 
-  carregarViagensFirebase();
+const form = document.getElementById('viagemForm');
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const dados = {
+    destino: document.getElementById('destino').value,
+    hotel: document.getElementById('hotel').value,
+    linkHotel: document.getElementById('linkHotel').value,
+    tipoHospedagem: document.getElementById('tipoHospedagem').value,
+    allInclusive: document.getElementById('allInclusive').value,
+    valorHotel: document.getElementById('valorHotel').value,
+    valorPassagem: document.getElementById('valorPassagem').value,
+    pessoas: document.getElementById('pessoas').value,
+    mes: document.getElementById('mes').value,
+    ano: document.getElementById('ano').value
+  };
+
+  fetch(webAppUrl, {
+    method: "POST",
+    body: JSON.stringify(dados)
+  })
+  .then(response => response.json())
+  .then(res => {
+    if(res.status === "success"){
+      alert("Viagem adicionada com sucesso!");
+      form.reset();
+      init();
+    }
+  })
+  .catch(err => alert("Erro ao enviar dados: "+err));
+});
+
+window.addEventListener('DOMContentLoaded', init);
 </script>
 
 </body>
 </html>
-
